@@ -1,0 +1,41 @@
+variables:
+  S3_BUCKET: "ariel-gitlab-qa"
+
+image: alpine:latest
+
+stages:
+  - "build"
+  - "test"
+  - "deploy"
+
+
+render_website:
+  stage: build
+  script:
+    - apk add markdown
+    #- mkdir -p public
+    #- cat public/index.html
+  artifacts:
+    paths:
+      - "public/index.html"
+
+test_website:
+  stage: test
+  script:
+    - apk add libxml2-utils
+    - xmllint --html public/index.html
+  dependencies:
+    - "render_website"
+    
+
+deploy_qa:
+  environment: qa
+  stage: deploy
+  script:
+    - apk add aws-cli
+    - aws s3 cp ./public/ s3://$S3_BUCKET/ --recursive
+  dependencies:
+    - "render_website"
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: manual
