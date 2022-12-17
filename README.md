@@ -9,3 +9,5 @@ build stage
 testing stage
 ![test stage](https://user-images.githubusercontent.com/95013498/208266241-1ec99be0-9c52-4147-b5c2-dff531f7cdad.png)
 
+deployment stage
+![deploy stage](https://user-images.githubusercontent.com/95013498/208266263-f88ba880-38d8-42c4-a7ae-cdfd776e6f0a.png)
